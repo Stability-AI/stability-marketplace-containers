@@ -1,7 +1,11 @@
 # marketplace-containers
-This repo will hold our universal marketplace containers to be released cross platform.
+This repo holds Stability AI's AWS Marketplace containers.
 
 Container images are all tested on AWS EC2 instance types g5.2xl, which are equipped with Nvidia A10 GPUs.
+
+If you have problems, please open an issue in this repository or submit a ticket at https://platform.stability.ai/support.
+
+For commercial use of these containers, please see [Stability Memberships](https://stability.ai/membership.).
 
 ### [SDXL Turbo](./sdxl-turbo)
 SDXL Turbo is an adversarial time-distilled Stable Diffusion XL (SDXL) model capable of running inference in as little as 1 step.
