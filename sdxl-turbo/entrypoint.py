@@ -63,7 +63,7 @@ async def generate_i2i(request: SdxlTurboRequest):
     try:
         init_image = request.image
         base64_decoded = base64.b64decode(init_image)
-        input_image = Image.frombytes("RGB", base64_decoded, "raw")
+        input_image = Image.frombytes("RGB", (512, 512), base64_decoded, "raw")
     
         image = pipe_i2i(
             image=input_image,
