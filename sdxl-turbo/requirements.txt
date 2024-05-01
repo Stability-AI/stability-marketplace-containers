@@ -10,3 +10,4 @@ pydantic==2.5.3
 uvicorn==0.20.0
 diffusers==0.25.0
 transformers==4.36.2 
+xformers==0.0.26.post1
