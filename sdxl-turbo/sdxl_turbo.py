@@ -1,7 +1,7 @@
 from diffusers import AutoPipelineForText2Image, AutoPipelineForImage2Image
 from pydantic import BaseModel, Field
 import torch
-from typing import List, Tuple, Optional
+from typing import Optional
  
 
 class SdxlTurboRequest(BaseModel):
@@ -22,6 +22,7 @@ def setup_pipeline(model_name: str, cached_model_path):
         force_download=False,
         local_files_only=True
     )
+    pipe_t2i.enable_xformers_memory_efficient_attention()
 
     #fp16 won't work with cpu.
     if torch.cuda.is_available():
@@ -34,7 +35,6 @@ def setup_pipeline(model_name: str, cached_model_path):
     pipe_t2i.unet = torch.compile(pipe_t2i.unet, mode="reduce-overhead", fullgraph=True)
     pipe_t2i.upcast_vae()
 
-    #pipe_i2i = AutoPipelineForInpainting.from_pipe(pipe_t2i).to(device)
     pipe_i2i = AutoPipelineForImage2Image.from_pipe(pipe_t2i).to(device)
 
     return pipe_t2i, pipe_i2i

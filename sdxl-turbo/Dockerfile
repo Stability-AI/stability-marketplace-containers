@@ -5,7 +5,6 @@ ENV MODEL_NAME="stabilityai/sdxl-turbo"
 ENV SERVING_PORT=8080
 # ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHONUNBUFFERED=1
-ENV MODEL_TYPE="stabilityai/sdxl-turbo"
 ENV SAVE_PATH="/opt/model"
 
 COPY requirements.txt /opt/
