@@ -3,7 +3,6 @@ FROM ubuntu:22.04
 LABEL maintainer="Stability AI"
 ENV MODEL_NAME="stabilityai/sdxl-turbo"
 ENV SERVING_PORT=8080
-# ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHONUNBUFFERED=1
 ENV SAVE_PATH="/opt/model"
 
@@ -42,8 +41,8 @@ ENTRYPOINT ["sh", "-c", "python3 entrypoint.py $SERVING_PORT"]
 
 # Label image
 ARG GIT_BRANCH
-ARG GIT_VERSION
+ARG GIT_COMMIT
 LABEL org.opencontainers.image.source https://github.com/Stability-AI/marketplace-containers
 LABEL org.opencontainers.image.version $GIT_BRANCH
-LABEL org.opencontainers.image.revision $GIT_VERSION
+LABEL org.opencontainers.image.revision $GIT_COMMIT
 LABEL org.opencontainers.image.vendor "Stability AI"
