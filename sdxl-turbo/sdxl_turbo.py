@@ -22,7 +22,6 @@ def setup_pipeline(model_name: str, cached_model_path):
         force_download=False,
         local_files_only=True
     )
-    pipe_t2i.enable_xformers_memory_efficient_attention()
 
     #fp16 won't work with cpu.
     if torch.cuda.is_available():
