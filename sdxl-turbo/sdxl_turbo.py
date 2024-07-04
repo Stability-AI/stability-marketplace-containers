@@ -2,15 +2,17 @@ from diffusers import AutoPipelineForText2Image, AutoPipelineForImage2Image
 from pydantic import BaseModel, Field
 import torch
 from typing import Optional
- 
+
 
 class SdxlTurboRequest(BaseModel):
     prompt: str
+    negative_prompt: Optional[str] = None
     num_inference_steps: int = Field(default=4)
     guidance_scale: float = Field(default=0.0)
     strength: float = Field(default=1.0)
     num_images_per_prompt: int = Field(default=1)
     image: Optional[str] = None
+
 
 def setup_pipeline(model_name: str, cached_model_path):
     pipe_t2i = AutoPipelineForText2Image.from_pretrained(

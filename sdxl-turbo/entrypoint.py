@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 import traceback
- 
+
 import uvicorn
 
 from fastapi import FastAPI, HTTPException, Response, status
@@ -16,7 +16,7 @@ CACHED_MODEL_PATH = os.getenv('SAVE_PATH')
 
 if MODEL_NAME is None or CACHED_MODEL_PATH is None:
     logging.error("Environment variables MODEL_NAME and CACHED_MODEL_PATH must be set. See Dockerfile for values.")
-    sys.exit(1) 
+    sys.exit(1)
 
 app = FastAPI()
 
@@ -40,6 +40,7 @@ async def generate_t2i(request: SdxlTurboRequest):
     try:
         image = pipe_t2i(
             prompt=request.prompt,
+            negative_prompt=request.negative_prompt,
             strength=request.strength,
             guidance_scale=request.guidance_scale,
             num_images_per_prompt=request.num_images_per_prompt,
@@ -57,6 +58,7 @@ async def generate_t2i(request: SdxlTurboRequest):
         logging.error(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error generating image: {str(e)}")
 
+
 # sdxl turbo image to image endpoint
 @app.post("/sdxl-turbo-i2i")
 async def generate_i2i(request: SdxlTurboRequest):
@@ -64,10 +66,11 @@ async def generate_i2i(request: SdxlTurboRequest):
         init_image = request.image
         base64_decoded = base64.b64decode(init_image)
         input_image = Image.frombytes("RGB", (512, 512), base64_decoded, "raw")
-    
+
         image = pipe_i2i(
             image=input_image,
             prompt=request.prompt,
+            negative_prompt=request.negative_prompt,
             strength=request.strength,
             guidance_scale=request.guidance_scale,
             num_images_per_prompt=request.num_images_per_prompt,
